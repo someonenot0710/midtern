@@ -1,0 +1,13 @@
+node_modules
+npm-debug.log
+.tern-project
+data-*.json
+logs.txt
+weathermood/node_modules/*
+weathermood/.tern-project
+weathermood/dist/index.bundle.js*
+weathermood/dist/vendor.bundle.js*
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

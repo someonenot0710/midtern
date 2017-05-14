@@ -14,6 +14,11 @@ export function getMoodIcon(group) {
             return 'fa fa-sun-o';
         case 'Clouds':
             return 'fa fa-cloud';
+        case 'YES':
+            return 'fa fa-check';
+        case 'NO':
+            return 'fa fa-times';
+
         default:
             return 'fa fa-question-circle';
     }

@@ -55,3 +55,9 @@ html, body {
 .weather-bg.na {
     background-image: url('../images/w-na-bg.jpg');
 }
+
+.weather-bg.bath {
+  background-image: url('../images/pig.JPG');
+
+
+}

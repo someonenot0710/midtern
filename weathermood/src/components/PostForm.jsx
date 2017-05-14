@@ -23,18 +23,15 @@ import {
 } from 'react-router-dom'
 
 import {getMoodIcon} from 'utilities/weather.js';
-import {createPost, input, inputDanger, toggleMood, setMoodToggle, selectMood ,toggleDog ,checkDog ,CheckYes, toggleName,selectDog,inputName,inputEmail,inputDate,inputTime,sendmail} from 'states/post-actions.js';
+import {input, inputDanger,toggleDog ,checkDog ,CheckYes, toggleName,selectDog,inputName,inputEmail,inputDate,inputTime,sendmail} from 'states/post-actions.js';
 
 import './PostForm.css';
-    var isit = '1';
+
 class PostForm extends React.Component {
     static propTypes = {
         inputValue: PropTypes.string,
         inputDanger: PropTypes.bool,
-        moodToggle: PropTypes.bool,
-        mood: PropTypes.string,
         dispatch: PropTypes.func,
-
         name: PropTypes.string,
         nameDnager:PropTypes.bool,
         mail:PropTypes.string,
@@ -43,9 +40,6 @@ class PostForm extends React.Component {
         dateDanger:PropTypes.bool,
         time:PropTypes.string,
         timeDanger:PropTypes.bool,
-
-
-
         dogToogle: PropTypes.bool,
         dogCheck: PropTypes.string,
         isCheck: PropTypes.string,
@@ -57,17 +51,7 @@ class PostForm extends React.Component {
 
     constructor(props) {
         super(props);
-
-        this.inputEl = null;
-        this.moodToggleEl = null;
-
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleDropdownSelect = this.handleDropdownSelect.bind(this);
-        this.handleMoodToggle = this.handleMoodToggle.bind(this);
-
-        this.handlePost = this.handlePost.bind(this);
-        this.handletest = this.handletest.bind(this);
-
         /*carelife*/
         this.handleDogToggle = this.handleDogToggle.bind(this);
         this.handleNameToggle = this.handleNameToggle.bind(this);
@@ -78,7 +62,6 @@ class PostForm extends React.Component {
         this.handleEmail = this.handleEmail.bind(this);
         this.handleDate = this.handleDate.bind(this);
         this.handleTime = this.handleTime.bind(this);
-
     }
 
     render() {
@@ -89,12 +72,13 @@ class PostForm extends React.Component {
             <div className='post-form'>
 
               <div>
-                <Alert>
-                <InputGroup>
+                <Alert color="warning">
+                <InputGroup className='line'>
                   <InputGroupAddon tag={Link} to='/post'>暱稱</InputGroupAddon>
                   <Input value={this.props.name} onChange={this.handleName}/>
                 </InputGroup>
-                <InputGroup>
+
+                <InputGroup className='line'>
                   <InputGroupAddon>信箱</InputGroupAddon>
                   <Input type="email" value={this.props.mail} onChange={this.handleEmail}/>
                 </InputGroup>
@@ -107,6 +91,7 @@ class PostForm extends React.Component {
                     </div>
                       <div id="time">
                     <Input type="select" name="select" id="exampleSelect" value={this.props.time} onChange={this.handleTime}>
+                      <option disabled>時段</option>
                       <option>早上</option>
                       <option>中午</option>
                       <option>下午</option>
@@ -117,36 +102,48 @@ class PostForm extends React.Component {
                     <div id="time">
                     <InputGroupAddon>犬隻</InputGroupAddon>
                     </div>
-                    <ButtonDropdown type='buttom' isOpen={dogToggle} toggle={this.handleDogToggle} style={{opacity:'1'}}>
+                    <ButtonDropdown className="sel" type='buttom' isOpen={dogToggle} toggle={this.handleDogToggle} style={{opacity:'1'}}>
                         <DropdownToggle className='mood-toggle' type='button' caret color="secondary">
                             {
                                 dogCheck === 'na' ? '是否指定' : dogCheck
-                            }&nbsp;<i className={getMoodIcon('na')}></i>
+
+                            }&nbsp;<i className={getMoodIcon(dogCheck)}></i>
                         </DropdownToggle>
                         <DropdownMenu>
-                            <DropdownItem type='button' onClick={()=> this.handlecheck('YES')}><i className={getMoodIcon('Clear')}></i>&nbsp;&nbsp;YES</DropdownItem>
-                            <DropdownItem type='button' onClick={()=> this.handlecheck('NO')} ><i className={getMoodIcon('Clouds') }></i>&nbsp;&nbsp;NO</DropdownItem>
+                            <DropdownItem type='button' onClick={()=> this.handlecheck('YES')}><i className={getMoodIcon('YES')}></i>&nbsp;&nbsp;YES</DropdownItem>
+                            <DropdownItem type='button' onClick={()=> this.handlecheck('NO')} ><i className={getMoodIcon('NO') }></i>&nbsp;&nbsp;NO</DropdownItem>
                         </DropdownMenu>
                     </ButtonDropdown>
 
-                    <ButtonDropdown type='buttom' isOpen={nameToggle} style={{opacity:isCheck}} toggle={this.handleNameToggle}>
+                    <ButtonDropdown className="sel" type='buttom' isOpen={nameToggle} style={{opacity:isCheck}} toggle={this.handleNameToggle}>
                         <DropdownToggle className='mood-toggle' type='button' caret color="secondary">
                             {
                                 dogname === 'na' ? '選愛寵' : dogname
-                            }&nbsp;<i className={getMoodIcon('na')}></i>
+                            }&nbsp;<i className='fa fa-heart fa-1x' aria-hidden="true"></i>
                         </DropdownToggle>
                         <DropdownMenu>
-                            <DropdownItem type='button' onClick={()=>this.handleDogSelect('小丸子')} ><i className={getMoodIcon('Clear')}></i>&nbsp;&nbsp;小丸子</DropdownItem>
-                            <DropdownItem type='button' onClick={()=>this.handleDogSelect('斑斑')} ><i className={getMoodIcon('Clouds') }></i>&nbsp;&nbsp;斑斑</DropdownItem>
+                            <DropdownItem type='button' onClick={()=>this.handleDogSelect('小丸子')}>&nbsp;&nbsp;小丸子</DropdownItem>
+                            <DropdownItem type='button' onClick={()=>this.handleDogSelect('黑糖')} >&nbsp;&nbsp;黑糖</DropdownItem>
+                            <DropdownItem type='button' onClick={()=>this.handleDogSelect('阿醜')} >&nbsp;&nbsp;阿醜</DropdownItem>
+                            <DropdownItem type='button' onClick={()=>this.handleDogSelect('Lally')} >&nbsp;&nbsp;Lally</DropdownItem>
+                            <DropdownItem type='button' onClick={()=>this.handleDogSelect('畫眉')} >&nbsp;&nbsp;畫眉</DropdownItem>
+                            <DropdownItem type='button' onClick={()=>this.handleDogSelect('阿幹')} >&nbsp;&nbsp;阿幹</DropdownItem>
+                            <DropdownItem type='button' onClick={()=>this.handleDogSelect('布丁')} >&nbsp;&nbsp;布丁</DropdownItem>
+                            <DropdownItem type='button' onClick={()=>this.handleDogSelect('巧虎')} >&nbsp;&nbsp;巧虎</DropdownItem>
+                            <DropdownItem type='button' onClick={()=>this.handleDogSelect('麥芽')} >&nbsp;&nbsp;麥芽</DropdownItem>
+                            <DropdownItem type='button' onClick={()=>this.handleDogSelect('小狼')} >&nbsp;&nbsp;小狼</DropdownItem>
+                            <DropdownItem type='button' onClick={()=>this.handleDogSelect('傷傷')} >&nbsp;&nbsp;傷傷</DropdownItem>
+                            <DropdownItem type='button' onClick={()=>this.handleDogSelect('黑嚕嚕')} >&nbsp;&nbsp;黑嚕嚕</DropdownItem>
+                            <DropdownItem type='button' onClick={()=>this.handleDogSelect('小桃子')} >&nbsp;&nbsp;小桃子</DropdownItem>
                         </DropdownMenu>
                     </ButtonDropdown>
                     <br></br>
                     <InputGroup>
                     <InputGroupAddon>備註</InputGroupAddon>
-                    <Input className='input time' type='textarea' getRef={el => {this.inputEl = el}} value={this.props.inputValue} onChange={this.handleInputChange} placeholder="What's on your mind?"></Input>
+                    <Input className='input time' type='textarea' getRef={el => {this.inputEl = el}} value={this.props.inputValue} onChange={this.handleInputChange} placeholder="Say something..."></Input>
                     </InputGroup>
 
-                    <Button className='btn-post align-self-end' color="info" onClick={this.handleSend}>Send</Button>
+                    <Button className='btn-post align-self-end btn' color="info" onClick={this.handleSend}>Send&nbsp;&nbsp;<i className='fa fa-thumbs-up fa-1x' aria-hidden="true"></i></Button>
                     </Alert>
 
               </div>
@@ -181,12 +178,6 @@ class PostForm extends React.Component {
 
     }
 
-
-
-    handletest(e){
-      let num = e.target.value;
-        console.log(num);
-    }
 
     handlecheck(choose){
 
@@ -228,10 +219,6 @@ class PostForm extends React.Component {
       this.props.dispatch(sendmail(this.props.name,this.props.mail,this.props.date,this.props.time,this.props.dogname,this.props.inputValue));
     }
 
-    handleDropdownSelect(mood) {
-        this.props.dispatch(selectMood(mood));
-    //    console.log(this.props.mood);
-    }
 
     handleInputChange(e) {
         const text = e.target.value
@@ -249,25 +236,7 @@ class PostForm extends React.Component {
       this.props.dispatch(toggleName());
     }
 
-    handleMoodToggle(e) {
-        this.props.dispatch(toggleMood());
-    }
 
-    handlePost() {
-      console.log(this.props.mood);
-        if (this.props.mood === 'na') {
-            this.props.dispatch(setMoodToggle(true));
-            return;
-        }
-        if (!this.props.inputValue) {
-            this.props.dispatch(inputDanger(true));
-            return;
-        }
-
-        this.props.dispatch(createPost(this.props.mood, this.props.inputValue));
-        this.props.dispatch(input(''));
-        this.props.dispatch(selectMood('na'));
-    }
 }
 
 export default connect(state => ({

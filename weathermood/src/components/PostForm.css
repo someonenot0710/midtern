@@ -24,6 +24,21 @@
     margin: 0 0 0.5rem 0;
 }
 
+.btn {
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 40%;
+}
+
+.sel{
+  margin-bottom: 12px;
+}
+
+.line{
+    margin-bottom: 12px;
+}
+
+
 @media (min-width: 576px) {
     .post-form .mood {
         margin: 0 0.5rem 0 0;

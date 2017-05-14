@@ -13,7 +13,10 @@ import {
     Label,
     FormText,
     InputGroup,
-    InputGroupAddon
+    InputGroupAddon,
+    Modal,
+    ModalHeader,
+    ModalBod
 } from 'reactstrap';
 import {connect} from 'react-redux';
 import {
@@ -26,7 +29,7 @@ import {getMoodIcon} from 'utilities/weather.js';
 import {input, inputDanger,toggleDog ,checkDog ,CheckYes, toggleName,selectDog,inputName,inputEmail,inputDate,inputTime,sendmail} from 'states/post-actions.js';
 
 import './PostForm.css';
-
+var count=0;
 class PostForm extends React.Component {
     static propTypes = {
         inputValue: PropTypes.string,
@@ -182,12 +185,12 @@ class PostForm extends React.Component {
     handlecheck(choose){
 
       this.props.dispatch(checkDog(choose));
-
-      this.handleChenage();
+      this.handleChenage(choose);
     }
 
-    handleChenage(){
-      if (this.props.dogCheck ==='NO' || this.props.dogCheck==='na')
+    handleChenage(choose){
+
+      if (this.props.dogCheck ==='NO' || (this.props.dogCheck==='na'&& choose==='YES'))
         this.props.dispatch(CheckYes('1'));
 
       else if (this.props.dogCheck ==='YES'){

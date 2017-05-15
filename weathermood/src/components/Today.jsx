@@ -30,13 +30,14 @@ class Today extends React.Component {
         return (
             <div className='today'>
                 <div className='weather'>
+                  <br></br>
                   <h1>洗澡の美好時光</h1>
+                  <br></br>
                   <p>走在校園裡摸了可愛的校浪，但看看手覺得又髒又臭？
                   如果你有意願，要不要撥空幫浪浪們洗個澡呢？<br></br>
                 只需要填完以下表單，就可以完成預約囉！！<br></br>
-              社團收到預約後將會回復一封信給您確認時間哦
                 </p>
-
+                <br></br><br></br><br></br>
                 </div>
                 <div className='posts'>
                     <h4 className='label'><i className='fa fa-bath fa-3x' aria-hidden="true"></i>&nbsp;&nbsp;洗澡囉～～</h4>

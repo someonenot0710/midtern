@@ -12,7 +12,8 @@ const initPostFormState = {
     name:'',
     mail:'',
     date:'',
-    time:''
+    time:'',
+    modal:false
 };
 export function postForm(state = initPostFormState, action) {
     switch (action.type) {
@@ -21,6 +22,12 @@ export function postForm(state = initPostFormState, action) {
             ...state,
             name: action.name
           };
+
+          case '@POST_FORM/TOGGLE_MODAL':
+            return{
+              ...state,
+              modal:!state.modal
+            }
 
           case '@POST_FORM/MAIL':
             return{

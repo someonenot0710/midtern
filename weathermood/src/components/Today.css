@@ -7,7 +7,7 @@
     max-width: 24rem;
     margin: 0 auto;
     text-align: center;
-    color: blue;
+    color: black;
 }
 
 .today .posts {
@@ -17,7 +17,7 @@
 }
 
 .today .posts .label {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(120, 33,22, 1);
     text-shadow: 0 0 0.2rem rgba(0, 0, 0, 0.3), 0 0 1rem rgba(0, 0, 0, 0.7);
     margin-bottom: 1rem;
     font-weight: 300;

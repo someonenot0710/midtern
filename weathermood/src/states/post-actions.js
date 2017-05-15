@@ -2,6 +2,15 @@ import {
     sendmail as sendmailFromApi
 } from 'api/posts.js';
 
+
+
+
+export function toggleModal(){
+  return {
+    type:'@POST_FORM/TOGGLE_MODAL'
+  }
+}
+
 export function inputName(name){
     return {
       type: '@POST_FORM/NAME',

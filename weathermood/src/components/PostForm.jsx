@@ -16,7 +16,8 @@ import {
     InputGroupAddon,
     Modal,
     ModalHeader,
-    ModalBod
+    ModalBody,
+    ModalFooter
 } from 'reactstrap';
 import {connect} from 'react-redux';
 import {
@@ -26,7 +27,7 @@ import {
 } from 'react-router-dom'
 
 import {getMoodIcon} from 'utilities/weather.js';
-import {input, inputDanger,toggleDog ,checkDog ,CheckYes, toggleName,selectDog,inputName,inputEmail,inputDate,inputTime,sendmail} from 'states/post-actions.js';
+import {input, inputDanger,toggleDog ,checkDog ,CheckYes, toggleName,selectDog,inputName,inputEmail,inputDate,inputTime,sendmail,toggleModal} from 'states/post-actions.js';
 
 import './PostForm.css';
 var count=0;
@@ -48,6 +49,7 @@ class PostForm extends React.Component {
         isCheck: PropTypes.string,
         nameToggle: PropTypes.bool,
         dogname: PropTypes.string,
+        modal: PropTypes.bool
 
     };
 
@@ -65,17 +67,19 @@ class PostForm extends React.Component {
         this.handleEmail = this.handleEmail.bind(this);
         this.handleDate = this.handleDate.bind(this);
         this.handleTime = this.handleTime.bind(this);
+        this.handlemodal = this.handlemodal.bind(this);
     }
 
     render() {
-        const {inputValue, moodToggle, mood,dogToggle, dogCheck , isCheck ,nameToggle , dogname} = this.props;
-        const inputDanger = this.props.inputDanger ? 'has-danger' : '';
+        const {inputValue, moodToggle, mood,dogToggle, dogCheck , isCheck ,nameToggle , dogname,modal} = this.props;
+  //      const inputDanger = this.props.inputDanger ? 'has-danger' : '';
 
         return (
             <div className='post-form'>
 
               <div>
                 <Alert color="warning">
+
                 <InputGroup className='line'>
                   <InputGroupAddon tag={Link} to='/post'>暱稱</InputGroupAddon>
                   <Input value={this.props.name} onChange={this.handleName}/>
@@ -83,13 +87,14 @@ class PostForm extends React.Component {
 
                 <InputGroup className='line'>
                   <InputGroupAddon>信箱</InputGroupAddon>
-                  <Input type="email" value={this.props.mail} onChange={this.handleEmail}/>
+                  <label htmlFor="inputEmail" className="control-label"></label>
+                  <Input type="email" value={this.props.mail}  onChange={this.handleEmail}/>
                 </InputGroup>
 
                   <div id="time">
                   <InputGroupAddon>日期</InputGroupAddon>
                   </div>
-                  <div id="time" >
+                  <div id="time">
                   <Input type="date" name="date" id="exampleDate" value={this.props.date} onChange={this.handleDate} />
                     </div>
                       <div id="time">
@@ -145,17 +150,28 @@ class PostForm extends React.Component {
                     <InputGroupAddon>備註</InputGroupAddon>
                     <Input className='input time' type='textarea' getRef={el => {this.inputEl = el}} value={this.props.inputValue} onChange={this.handleInputChange} placeholder="Say something..."></Input>
                     </InputGroup>
-
                     <Button className='btn-post align-self-end btn' color="info" onClick={this.handleSend}>Send&nbsp;&nbsp;<i className='fa fa-thumbs-up fa-1x' aria-hidden="true"></i></Button>
-                    </Alert>
+                    <Modal isOpen={modal} toggle={this.handlemodal}>
+                      <ModalHeader toggle={this.handlemodal}>預約成功（≧∇≦）</ModalHeader>
+                      <ModalBody>謝謝您的預約<br></br>社團收到預約後會確認當天與您聯繫的社員與時間<br></br>三天內會寄信給您！<br></br><br></br>Carelife</ModalBody>
+                      <ModalFooter>
+                        <Button color="primary" onClick={this.handlemodal}>Ok</Button>
+                      </ModalFooter>
 
+
+                    </Modal>
+
+
+                  </Alert>
               </div>
-
-
             </div>
         );
     }
 
+
+    handlemodal(){
+      this.props.dispatch(toggleModal());
+    }
 
     handleName(e){
       let name = e.target.value;
@@ -218,7 +234,7 @@ class PostForm extends React.Component {
       this.props.dispatch(CheckYes('0'));
       this.props.dispatch(checkDog('na'));
       this.props.dispatch(selectDog('na'));
-
+      this.handlemodal();
       this.props.dispatch(sendmail(this.props.name,this.props.mail,this.props.date,this.props.time,this.props.dogname,this.props.inputValue));
     }
 

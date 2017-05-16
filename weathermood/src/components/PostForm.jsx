@@ -72,38 +72,40 @@ class PostForm extends React.Component {
 
     render() {
         const {inputValue, moodToggle, mood,dogToggle, dogCheck , isCheck ,nameToggle , dogname,modal} = this.props;
-  //      const inputDanger = this.props.inputDanger ? 'has-danger' : '';
-
         return (
             <div className='post-form'>
 
               <div>
+                <Form>
                 <Alert color="warning">
 
                 <InputGroup className='line'>
-                  <InputGroupAddon tag={Link} to='/post'>暱稱</InputGroupAddon>
-                  <Input value={this.props.name} onChange={this.handleName}/>
+                  <InputGroupAddon >暱稱</InputGroupAddon>
+                  <Input value={this.props.name} onChange={this.handleName} required/>
                 </InputGroup>
 
                 <InputGroup className='line'>
                   <InputGroupAddon>信箱</InputGroupAddon>
-                  <label htmlFor="inputEmail" className="control-label"></label>
-                  <Input type="email" value={this.props.mail}  onChange={this.handleEmail}/>
+                  <Input type="email" value={this.props.mail}  onChange={this.handleEmail} required/>
                 </InputGroup>
 
                   <div id="time">
                   <InputGroupAddon>日期</InputGroupAddon>
                   </div>
                   <div id="time">
-                  <Input type="date" name="date" id="exampleDate" value={this.props.date} onChange={this.handleDate} />
-                    </div>
+                  <Input type="date" value={this.props.date} onChange={this.handleDate} placeholder="ex: 2017-05-01" required/>
+                  </div>
+                  &nbsp;&nbsp;
+
                       <div id="time">
-                    <Input type="select" name="select" id="exampleSelect" value={this.props.time} onChange={this.handleTime}>
-                      <option disabled>時段</option>
-                      <option>早上</option>
-                      <option>中午</option>
-                      <option>下午</option>
-                    </Input>
+
+                      <select value={this.props.time} onChange={this.handleTime} required>
+                      <option value="" disabled>時段</option>
+                      <option value="早上">早上</option>
+                      <option value="中午" >中午</option>
+                      <option value="下午">下午</option>
+                      </select>
+
                     </div>
                     <br></br>
 
@@ -146,23 +148,23 @@ class PostForm extends React.Component {
                         </DropdownMenu>
                     </ButtonDropdown>
                     <br></br>
+
+
                     <InputGroup>
                     <InputGroupAddon>備註</InputGroupAddon>
                     <Input className='input time' type='textarea' getRef={el => {this.inputEl = el}} value={this.props.inputValue} onChange={this.handleInputChange} placeholder="Say something..."></Input>
                     </InputGroup>
-                    <Button className='btn-post align-self-end btn' color="info" onClick={this.handleSend}>Send&nbsp;&nbsp;<i className='fa fa-thumbs-up fa-1x' aria-hidden="true"></i></Button>
+
+                    <Button type="submit" className='btn-post align-self-end btn' color="info" onClick={this.handleSend}>Send&nbsp;&nbsp;<i className='fa fa-thumbs-up fa-1x' aria-hidden="true"></i></Button>
                     <Modal isOpen={modal} toggle={this.handlemodal}>
                       <ModalHeader toggle={this.handlemodal}>預約成功（≧∇≦）</ModalHeader>
                       <ModalBody>謝謝您的預約<br></br>社團收到預約後會確認當天與您聯繫的社員與時間<br></br>三天內會寄信給您！<br></br><br></br>Carelife</ModalBody>
                       <ModalFooter>
-                        <Button color="primary" onClick={this.handlemodal}>Ok</Button>
+                        <Button  color="primary" onClick={this.handlemodal}>Ok</Button>
                       </ModalFooter>
-
-
                     </Modal>
-
-
                   </Alert>
+                  </Form>
               </div>
             </div>
         );
@@ -176,7 +178,6 @@ class PostForm extends React.Component {
     handleName(e){
       let name = e.target.value;
       this.props.dispatch(inputName(name));
-
     }
 
     handleEmail(e){
@@ -226,6 +227,24 @@ class PostForm extends React.Component {
       console.log(this.props.time);
       console.log(this.props.dogname);
       console.log(this.props.inputValue);
+       if(this.props.name===''||this.props.mail==='')
+         return;
+
+      if(this.props.date===''||this.props.time==='')
+        return;
+      if(this.props.dogCheck==='na')
+      {
+        this.handleDogToggle();
+        return;
+      }
+
+      if(this.props.dogCheck==='YES'&&this.props.dogname==='na')
+      {
+        this.handleNameToggle();
+        return;
+      }
+
+
       this.props.dispatch(inputName(''));
       this.props.dispatch(inputEmail(''));
       this.props.dispatch(inputDate(''));

@@ -49,8 +49,7 @@ class PostForm extends React.Component {
         isCheck: PropTypes.string,
         nameToggle: PropTypes.bool,
         dogname: PropTypes.string,
-        modal: PropTypes.bool
-
+        modal: PropTypes.bool,
     };
 
 
@@ -177,6 +176,7 @@ class PostForm extends React.Component {
 
     handleName(e){
       let name = e.target.value;
+    //  console.log(name);
       this.props.dispatch(inputName(name));
     }
 
@@ -227,11 +227,7 @@ class PostForm extends React.Component {
       console.log(this.props.time);
       console.log(this.props.dogname);
       console.log(this.props.inputValue);
-       if(this.props.name===''||this.props.mail==='')
-         return;
 
-      if(this.props.date===''||this.props.time==='')
-        return;
       if(this.props.dogCheck==='na')
       {
         this.handleDogToggle();

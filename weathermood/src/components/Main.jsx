@@ -20,6 +20,7 @@ import {connect} from 'react-redux';
 
 import Today from 'components/Today.jsx';
 import PostForm from 'components/PostForm.jsx';
+import Tell from 'components/tell.jsx'
 import './Main.css';
 
 class Main extends React.Component {
@@ -41,6 +42,13 @@ class Main extends React.Component {
                             <Navbar color='faded' light toggleable>
                                 <NavbarToggler right onClick={this.handleNavbarToggle}/>
                                 <NavbarBrand className='text-info' href="/">WeatherMood</NavbarBrand>
+                                  <Collapse isOpen={this.props.navbarToggle} navbar>
+                                      <Nav navbar>
+                                          <NavItem>
+                                              <NavLink tag={Link} to='/tell'>Tell</NavLink>
+                                          </NavItem>
+                                      </Nav>
+                                  </Collapse>
 
                             </Navbar>
                         </div>
@@ -49,6 +57,10 @@ class Main extends React.Component {
                     <Route exact path="/" render={() => (
                         <Today />
                     )}/>
+                  <Route exact path="/tell" render={() => (
+                        <Tell />
+                    )}/>
+
                     <div className='footer'>
                         Carelife
                     </div>

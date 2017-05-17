@@ -60,6 +60,10 @@ html, body {
   /*background-image: url('../images/pig.JPG');*/
   background-image: url('../images/p.png');
   /*background-color: rgb(255,255,255,1);*/
+}
 
-
+.weather-bg.tell {
+  /*background-image: url('../images/pig.JPG');*/
+  background-image: url('../images/m.png');
+  /*background-color: rgb(255,255,255,1);*/
 }

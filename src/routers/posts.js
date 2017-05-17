@@ -1,12 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
 const postModel = require('../model/posts.js');
 const voteModel = require('../model/votes.js');
 const mailModel = require('../model/mail.js');
-
 const router = express.Router();
 
+const multer = require('multer');
 router.use(bodyParser.json());
 
 // List
@@ -16,10 +15,16 @@ router.get('/posts', function(req, res) {
     });
 });
 
-
 router.post('/mails',function(req,res){
     const {name,mail,date,time,dogname,comment} = req.body;
     mailModel.mail(name,mail,date,time,dogname,comment);
+});
+
+
+router.post('/texts',function(req,res){
+    const {name,mail,text} = req.body;
+    console.log(req.body);
+  //  mailModel.tell(name,mail,text);
 });
 
 // Create

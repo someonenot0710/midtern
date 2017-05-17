@@ -41,6 +41,22 @@ export function sendmail(name,mail,date,time,dogname,comment){
   });
 }
 
+export function sendtell(name,mail,text,file){
+  let url = `${postBaseUrl}/texts`;
+  console.log(`Making text request to: ${url}`);
+
+
+  return axios.post(url,{
+    name,
+    mail,
+    text,
+  }).then(function(res){
+    if(res.status != 200)
+      throw new Error(`Unexpected response code: ${res.status}`);
+  });
+}
+
+
 export function createPost(mood, text) {
     let url = `${postBaseUrl}/posts`;
 
